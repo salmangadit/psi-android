@@ -52,15 +52,16 @@ public class GraphActivity extends Activity {
 
 		// Create a formatter to use for drawing a series using
 		// LineAndPointRenderer:
-		BarFormatter series1Format = new BarFormatter(Color.rgb(0, 200, 0), // fill
+		LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.rgb(0, 200, 0), // fill
 																			// color
-				Color.rgb(0, 100, 0)); // border color
+				Color.rgb(0, 100, 0), null); // border color
 
 		// add a new series' to the xyplot:
 		mySimpleXYPlot.addSeries(series1, series1Format);
 
 		// reduce the number of range labels
-		mySimpleXYPlot.setTicksPerRangeLabel(3);
+//		mySimpleXYPlot.setRangeBottomMax(0);
+//		mySimpleXYPlot.setRangeBottomMin(0);
 
 		// by default, AndroidPlot displays developer guides to aid in laying
 		// out your plot.

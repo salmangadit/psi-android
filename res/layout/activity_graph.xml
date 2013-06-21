@@ -17,7 +17,7 @@
             android:layout_marginLeft="10px"
             android:layout_marginRight="10px"
             android:layout_marginTop="10px"
-            title="A Simple XYPlot Example" />
+            title="PSI Graph" />
     </LinearLayout>
 
 </FrameLayout>
