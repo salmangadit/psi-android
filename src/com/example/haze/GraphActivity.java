@@ -48,7 +48,7 @@ public class GraphActivity extends Activity {
 				SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use
 														// the element index as
 														// the x value
-				"Series1"); // Set the display title of the series
+				"PSI Values"); // Set the display title of the series
 
 		// Create a formatter to use for drawing a series using
 		// LineAndPointRenderer:
