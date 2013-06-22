@@ -81,8 +81,6 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 			Toast.makeText(HazestagramLoginActivity.this,
 					"Instagram Authorization Successful", Toast.LENGTH_SHORT)
 					.show();
-			Intent intent = new Intent(getApplicationContext(), Hazestagram.class);
-			startActivity(intent);
 		}
 
 		@Override
@@ -124,12 +122,20 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 			alertDialog.setTitle("Your Details");
 			alertDialog.setMessage("Name - " + name + ", Access Token - "
 					+ accessToken);
+			Globals appState = ((Globals) getApplicationContext());
+			Cache cache = appState.getCache();
+			
+			cache.access_token = accessToken;
+			
+			appState.setCache(cache);
+			
 			alertDialog.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-
+							Intent intent = new Intent(getApplicationContext(), Hazestagram.class);
+							startActivity(intent);
 						}
 					});
 			alertDialog.show();

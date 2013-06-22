@@ -56,11 +56,11 @@ public class MainActivity extends Activity {
 		case R.id.action_settings:
 			openSettings();
 			return true;
-		case R.id.action_graph:
-			openGraph();
-			return true;
 		case R.id.action_hazestagram:
 			openHazestagram();
+			return true;
+		case R.id.action_graph:
+			openGraph();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

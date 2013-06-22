@@ -9,4 +9,6 @@ public class Cache {
 	public String latest_date = "Loading";
 	
 	public List<PSIValue> last_ten_readings = new ArrayList<PSIValue>();
+	
+	public String access_token = null;
 }

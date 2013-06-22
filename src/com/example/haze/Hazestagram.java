@@ -14,6 +14,7 @@ import org.json.JSONTokener;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class Hazestagram extends Activity {
@@ -29,9 +30,12 @@ public class Hazestagram extends Activity {
 
 		mSessionStore = new SessionStore(this.getApplicationContext());
 		String access_token = mSessionStore.getInstaAccessToken();
-
+		
+		Globals appState = ((Globals) getApplicationContext());
+		Cache cache = appState.getCache();
+		
 		urlString = Instagram.APIURL + "tags/" + "hazesg"
-				+ "/media/recent?access_token=" + access_token;
+				+ "/media/recent?access_token=" + cache.access_token;
 		try {
 			url = new URL(urlString);
 		} catch (MalformedURLException e) {
@@ -39,50 +43,8 @@ public class Hazestagram extends Activity {
 			e.printStackTrace();
 		}
 
-		InputStream inputStream;
-		try {
-			inputStream = url.openConnection().getInputStream();
-			String response = streamToString(inputStream);
-			
-			JSONObject jsonObject;
-			try {
-				jsonObject = (JSONObject) new JSONTokener(response).nextValue();
-				JSONArray jsonArray = jsonObject.getJSONArray("data");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		new HazestagramGenerator(this, url, urlString).execute();
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public String streamToString(InputStream is) throws IOException {
-		String string = "";
-
-		if (is != null) {
-			StringBuilder stringBuilder = new StringBuilder();
-			String line;
-			try {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(is));
-
-				while ((line = reader.readLine()) != null) {
-					stringBuilder.append(line);
-				}
-
-				reader.close();
-			} finally {
-				is.close();
-			}
-
-			string = stringBuilder.toString();
-		}
-
-		return string;
 	}
 
 	@Override
