@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name="com.example.haze.GraphActivity"
-            android:label="@string/title_activity_graph" >
+            android:label="@string/title_activity_graph"
+            android:parentActivityName="com.example.haze.MainActivity" >
         </activity>
     </application>
 

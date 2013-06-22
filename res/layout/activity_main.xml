@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:background = "#00FFFF" >
+    android:background = "#000000" >
 
     <TextView
         android:id="@+id/txtPSI"
@@ -17,6 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="163"
+        android:textColor="#FFFFFF"
         android:textSize="@android:dimen/thumbnail_height" />
 
     <TextView
@@ -27,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
         android:text="PSI Value:"
+        android:textColor="#00FFFF"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -47,6 +49,7 @@
         android:layout_below="@+id/txtPSI"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+        android:textColor="#FFFFFF"
         android:text="11 AM" />
 
 </RelativeLayout>

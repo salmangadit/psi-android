@@ -4,20 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GraphActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="#000000">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/PSIgraph"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10px"
-            android:layout_marginRight="10px"
-            android:layout_marginTop="10px"
-            title="PSI Graph" />
-    </LinearLayout>
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+        android:id="@+id/layout"/>
 
 </FrameLayout>

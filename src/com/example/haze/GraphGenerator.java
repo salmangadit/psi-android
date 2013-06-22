@@ -2,6 +2,8 @@ package com.example.haze;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,19 +16,20 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
+public class GraphGenerator extends AsyncTask<Void, Void, String> {
 	private Cache cache = null;
 	private static String TAG = "Haze.java";
-	static JSONObject jObj = null;
+	static JSONArray jObj = null;
 	ProgressDialog progressDialog;
-	MainActivity main = null;
+	GraphActivity main = null;
 	String endpoint;
 
-	public ConstantsGenerator(Cache con, MainActivity main) {
+	public GraphGenerator(Cache con, GraphActivity main) {
 		cache = con;
 		this.main = main;
 		endpoint = "http://hidden-ocean-3278.herokuapp.com";
@@ -34,15 +37,15 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected void onPreExecute() {
-		progressDialog = ProgressDialog.show(main, "Loading latest PSI value...", "", true);
+		progressDialog = ProgressDialog.show(main,
+				"Generating latest PSI graph...", "", true);
 	};
 
 	@Override
 	protected String doInBackground(Void... arg0) {
 		HttpClient httpClient = new DefaultHttpClient();
 		// HttpContext localContext = new BasicHttpContext();
-		HttpGet httpGet = new HttpGet(
-				endpoint + "/latest");
+		HttpGet httpGet = new HttpGet(endpoint + "/list");
 		String text = null;
 		try {
 			HttpResponse response = httpClient.execute(httpGet);
@@ -59,7 +62,7 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 		Log.v(TAG, "Response string: " + results);
 		if (results != null) {
 			try {
-				jObj = new JSONObject(results);
+				jObj = new JSONArray(results);
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -69,30 +72,23 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 			}
 
 			try {
-				if (jObj.getString("reading") != "-"){
-					cache.latest_value = Integer.parseInt(jObj.getString("reading"));
-				} else {
-					cache.latest_value = -1;
-				}
-					cache.latest_time =  jObj.getString("time");
-					main.time.setText(jObj.getString("time"));
-					main.value.setText(jObj.getString("reading"));
-					
-					if (cache.latest_value == -1){
-						main.hazard.setText("Server problems. Value unreadable.");
-					}
-					if (cache.latest_value >= 0 && cache.latest_value <= 50){
-						main.hazard.setText("Good");
-					} else if (cache.latest_value >= 51 && cache.latest_value <= 100){
-						main.hazard.setText("Moderate");
-					} else if (cache.latest_value >= 101 && cache.latest_value <= 200){
-						main.hazard.setText("Unhealthy");
-					} else if (cache.latest_value >= 201 && cache.latest_value <= 300){
-						main.hazard.setText("Very unhealthy");
+				for (int i = 0; i < jObj.length(); i++) {
+					PSIValue val = new PSIValue();
+					val.time = jObj.getJSONObject(i).getString("time");
+					if (jObj.getJSONObject(i).getString("reading") != "-") {
+						val.value = Integer.parseInt(jObj.getJSONObject(i)
+								.getString("reading"));
 					} else {
-						main.hazard.setText("Hazardous");
-					} 
-					
+						val.value = -1;
+					}
+
+					cache.last_ten_readings.add(val);
+				}
+
+				main.drawGraph(cache.last_ten_readings);
+
+				Globals appState = ((Globals) main.getApplicationContext());
+				appState.setCache(cache);
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -102,7 +98,6 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 		}
 
 		progressDialog.dismiss();
-
 
 	}
 

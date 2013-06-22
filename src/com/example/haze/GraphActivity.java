@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.androidplot.series.XYSeries;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.BarFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.LineGraphView;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Menu;
+import android.widget.LinearLayout;
 
 public class GraphActivity extends Activity {
 
-	private XYPlot mySimpleXYPlot;
 	private Cache cache = null;
+	private static String TAG = "Haze.java";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,44 +30,48 @@ public class GraphActivity extends Activity {
 		Globals appState = ((Globals) getApplicationContext());
 		cache = appState.getCache();
 
-		// initialize our XYPlot reference:
-		mySimpleXYPlot = (XYPlot) findViewById(R.id.PSIgraph);
+		new GraphGenerator(cache, this).execute();
 
 		// Create a couple arrays of y-values to plot:
-		List<Number> series1Numbers = new ArrayList<Number>();
+		// List<Number> series1Numbers = new ArrayList<Number>();
+		//
+		// for (int i = 0; i < cache.last_ten_readings.size(); i++) {
+		// series1Numbers.add((Number) cache.last_ten_readings.get(i).value);
+		// }
+		//
+		// drawGraph(series1Numbers);
+	}
 
-		for (int i = 0; i < cache.last_ten_readings.size(); i++) {
-			series1Numbers.add((Number) cache.last_ten_readings.get(i).value);
+	public void drawGraph(List<PSIValue> values) {
+
+		GraphViewData[] data = new GraphViewData[values.size()];
+		for (int i = 0; i < values.size(); i++) {
+			//Log.v(TAG, String.valueOf(values.get(i).timeAsDouble()));
+			data[i] = new GraphViewData(i,
+					values.get(i).value);
+		}
+		
+		GraphView graphView = new LineGraphView(this // context
+				, "PSI Values" // heading
+		);
+
+		String[] labels = new String[values.size()];
+		for (int i = 0; i < values.size(); i++) {
+			labels[i] = values.get(i).time;
 		}
 
-		// Turn the above arrays into XYSeries':
-		XYSeries series1 = new SimpleXYSeries(series1Numbers, // SimpleXYSeries
-																// takes a List
-																// so turn our
-																// array into a
-																// List
-				SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use
-														// the element index as
-														// the x value
-				"PSI Values"); // Set the display title of the series
+		graphView.setHorizontalLabels(labels);
 
-		// Create a formatter to use for drawing a series using
-		// LineAndPointRenderer:
-		LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.rgb(0, 200, 0), // fill
-																			// color
-				Color.rgb(0, 100, 0), null); // border color
+		// add data
+		graphView.addSeries(new GraphViewSeries(data));
+		// set view port, start=2, size=40
+		graphView.setViewPort(0, 10);
+		graphView.setScrollable(false);
+		// optional - activate scaling / zooming
+		// graphView.setScalable(false);
 
-		// add a new series' to the xyplot:
-		mySimpleXYPlot.addSeries(series1, series1Format);
-
-		// reduce the number of range labels
-//		mySimpleXYPlot.setRangeBottomMax(0);
-//		mySimpleXYPlot.setRangeBottomMin(0);
-
-		// by default, AndroidPlot displays developer guides to aid in laying
-		// out your plot.
-		// To get rid of them call disableAllMarkup():
-		mySimpleXYPlot.disableAllMarkup();
+		LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+		layout.addView(graphView);
 	}
 
 	@Override
