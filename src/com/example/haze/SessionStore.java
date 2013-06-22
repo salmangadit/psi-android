@@ -20,7 +20,7 @@ public class SessionStore {
 		return mContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 	}
 	
-	public void saveInstaAccessToke(String accessToken) {
+	public void saveInstaAccessToken(String accessToken) {
 		Editor editor = getSharedPreferences().edit();
 		editor.putString(ACCESS_TOKEN_KEY, accessToken);
 		editor.commit();

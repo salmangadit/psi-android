@@ -8,5 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Hazestagram"
     android:background="#00D1DA" >
+    
+    <ListView
+        android:id="@+id/srListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </RelativeLayout>

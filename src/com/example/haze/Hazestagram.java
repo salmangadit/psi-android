@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ListView;
 
 public class Hazestagram extends Activity {
 	private SessionStore mSessionStore;
@@ -34,7 +36,7 @@ public class Hazestagram extends Activity {
 		Globals appState = ((Globals) getApplicationContext());
 		Cache cache = appState.getCache();
 		
-		urlString = Instagram.APIURL + "tags/" + "hazesg"
+		urlString = Instagram.APIURL + "/tags/" + "hazesg"
 				+ "/media/recent?access_token=" + cache.access_token;
 		try {
 			url = new URL(urlString);
@@ -44,7 +46,11 @@ public class Hazestagram extends Activity {
 		}
 
 		new HazestagramGenerator(this, url, urlString).execute();
-
+	}
+	
+	public void DownloadImages(List<String> url, List<String> names, List<String> ids){
+		final ListView lv = (ListView) findViewById(R.id.srListView);
+		lv.setAdapter(new ResultsAdapter(this, url, names));
 	}
 
 	@Override

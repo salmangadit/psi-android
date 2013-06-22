@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -98,11 +100,43 @@ public class HazestagramGenerator extends AsyncTask<Void, Void, String> {
 	protected void onPostExecute(String results) {
 		Log.v(TAG, "Response string: " + results);
 		if (results != null) {
+			JSONArray data = null;
+			try {
+				jObj = new JSONObject(results);
+				data = jObj.getJSONArray("data");
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			List<String> urls = new ArrayList<String>();
+			List<String> names = new ArrayList<String>();
+			List<String> ids = new ArrayList<String>();
+			
+			for (int i=0; i<data.length(); i++){
+				try {
+					String image_url = data.getJSONObject(i).getJSONObject("images").getJSONObject("low_resolution").getString("url");
+					String username = data.getJSONObject(i).getJSONObject("user").getString("username");
+					String id = data.getJSONObject(i).getString("id");
+					image_url=image_url.replace("\\", "");
+					Log.v(TAG, image_url+","+username);
+					urls.add(image_url);
+					names.add(username);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			main.DownloadImages(urls, names, ids);
+			
 		}
 
 		progressDialog.dismiss();
 
 	}
+	
 
 	protected String getASCIIContentFromEntity(HttpEntity entity)
 			throws IllegalStateException, IOException {

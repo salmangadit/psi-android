@@ -16,7 +16,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
-public class HazestagramLoginActivity extends Activity implements OnClickListener {
+public class HazestagramLoginActivity extends Activity implements
+		OnClickListener {
 	private Button mButton;
 	private InstaAuth mInstaImpl;
 	private Context mContext;
@@ -33,6 +34,22 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 		mButton = (Button) findViewById(R.id.btnLogin);
 		mButton.setOnClickListener(this);
 		mResponseListener = new ResponseListener();
+
+		// Check if there is a token
+		SessionStore sess = new SessionStore(this.getApplicationContext());
+		String access_token = sess.getInstaAccessToken();
+
+		if (access_token != null) {
+			Globals appState = ((Globals) getApplicationContext());
+			Cache cache = appState.getCache();
+
+			cache.access_token = access_token;
+			appState.setCache(cache);
+
+			Intent intent = new Intent(getApplicationContext(),
+					Hazestagram.class);
+			startActivity(intent);
+		}
 	}
 
 	/**
@@ -74,8 +91,7 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 		mInstaImpl.setAuthAuthenticationListener(new AuthListener());
 	}
 
-	public class AuthListener implements
-			InstaAuth.AuthAuthenticationListener {
+	public class AuthListener implements InstaAuth.AuthAuthenticationListener {
 		@Override
 		public void onSuccess() {
 			Toast.makeText(HazestagramLoginActivity.this,
@@ -85,8 +101,8 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 
 		@Override
 		public void onFail(String error) {
-			Toast.makeText(HazestagramLoginActivity.this, "Authorization Failed",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(HazestagramLoginActivity.this,
+					"Authorization Failed", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -124,17 +140,21 @@ public class HazestagramLoginActivity extends Activity implements OnClickListene
 					+ accessToken);
 			Globals appState = ((Globals) getApplicationContext());
 			Cache cache = appState.getCache();
-			
+
 			cache.access_token = accessToken;
-			
+
+			SessionStore sess = new SessionStore(context);
+			sess.saveInstaAccessToken(accessToken);
+
 			appState.setCache(cache);
-			
+
 			alertDialog.setPositiveButton("Ok",
 					new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent intent = new Intent(getApplicationContext(), Hazestagram.class);
+							Intent intent = new Intent(getApplicationContext(),
+									Hazestagram.class);
 							startActivity(intent);
 						}
 					});
