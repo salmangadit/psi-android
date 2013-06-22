@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".GraphActivity"
     tools:ignore="MergeRootFrame" 
-    android:background="#000000">
+    android:background="#00D1DA">
 
     <LinearLayout
         android:layout_width="fill_parent"

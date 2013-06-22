@@ -59,9 +59,17 @@ public class MainActivity extends Activity {
 		case R.id.action_graph:
 			openGraph();
 			return true;
+		case R.id.action_hazestagram:
+			openHazestagram();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void openHazestagram() {
+		Intent intent = new Intent(getApplicationContext(), HazestagramLoginActivity.class);
+		startActivity(intent);
 	}
 
 	void openSettings() {

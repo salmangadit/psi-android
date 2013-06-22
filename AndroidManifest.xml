@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".Globals"
+        android:name="com.example.haze.Globals"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
@@ -30,6 +30,18 @@
             android:name="com.example.haze.GraphActivity"
             android:label="@string/title_activity_graph"
             android:parentActivityName="com.example.haze.MainActivity" >
+        </activity>
+        <activity
+            android:name="com.example.haze.HazestagramLoginActivity"
+            android:label="@string/title_activity_hazestagram"
+            android:parentActivityName="com.example.haze.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.haze.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.haze.Hazestagram"
+            android:label="@string/title_activity_hazestagram" >
         </activity>
     </application>
 
