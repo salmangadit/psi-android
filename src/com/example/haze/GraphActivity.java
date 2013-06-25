@@ -45,8 +45,8 @@ public class GraphActivity extends Activity {
 	public void drawGraph(List<PSIValue> values) {
 
 		GraphViewData[] data = new GraphViewData[values.size()];
-		for (int i = values.size() - 1; i >= 0; i++) {
-			// Log.v(TAG, String.valueOf(values.get(i).timeAsDouble()));
+		for (int i = values.size() - 1; i >= 0; i--) {
+			Log.v(TAG, String.valueOf(i));
 			data[i] = new GraphViewData(i, values.get(i).value);
 		}
 
@@ -55,7 +55,7 @@ public class GraphActivity extends Activity {
 		);
 
 		String[] labels = new String[values.size()];
-		for (int i = values.size() - 1; i >= 0; i++) {
+		for (int i = values.size() - 1; i >= 0; i--) {
 			labels[i] = values.get(i).time;
 		}
 
@@ -64,7 +64,7 @@ public class GraphActivity extends Activity {
 		// add data
 		graphView.addSeries(new GraphViewSeries(data));
 		// set view port, start=2, size=40
-		graphView.setViewPort(0, values.size());
+		graphView.setViewPort(0, values.size()-1);
 		graphView.setScrollable(false);
 		// optional - activate scaling / zooming
 		// graphView.setScalable(false);

@@ -30,7 +30,7 @@ public class PSIService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(TAG, "About to execute PSI value poll");
+		//Log.d(TAG, "About to execute PSI value poll");
 		new PSIPoller(this).execute();
 	}
 
@@ -61,14 +61,14 @@ public class PSIService extends IntentService {
 
 		@Override
 		protected void onPostExecute(String results) {
-			Log.v(TAG, "Response string: " + results);
+			//Log.v(TAG, "Response string: " + results);
 			if (results != null) {
 				try {
 					jObj = new JSONObject(results);
 
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					Log.e("JSON Parser", "Error parsing data " + e.toString());
+					//Log.e("JSON Parser", "Error parsing data " + e.toString());
 					e.printStackTrace();
 
 				}
@@ -77,22 +77,22 @@ public class PSIService extends IntentService {
 					int value = 0;
 					if (jObj.getString("reading") != "-") {
 						 value = Integer.parseInt(jObj.getString("reading"));
-						// } else if (value >= 101 && value <= 200) {
-						// service.sendNotification(
-						// service.getApplicationContext(),
-						// "Haze is unhealthy. PSI value = " + value);
-						// } else if (value >= 201 && value <= 300) {
-						// service.sendNotification(
-						// service.getApplicationContext(),
-						// "Haze is very unhealthy. PSI value = " + value);
-						// } else {
-						// service.sendNotification(
-						// service.getApplicationContext(),
-						// "Haze is hazardous. PSI value = " + value);
+						 } else if (value >= 101 && value <= 200) {
+						 service.sendNotification(
+						 service.getApplicationContext(),
+						 "Haze is unhealthy. PSI value = " + value);
+						 } else if (value >= 201 && value <= 300) {
+						 service.sendNotification(
+						 service.getApplicationContext(),
+						 "Haze is very unhealthy. PSI value = " + value);
+						 } else {
+						 service.sendNotification(
+						 service.getApplicationContext(),
+						 "Haze is hazardous. PSI value = " + value);
 					}
 
-					service.sendNotification(service.getApplicationContext(),
-							"Haze is hazardous. PSI value = " + value);
+//					service.sendNotification(service.getApplicationContext(),
+//							"Haze is hazardous. PSI value = " + value);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

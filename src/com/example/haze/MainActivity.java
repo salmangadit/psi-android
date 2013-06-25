@@ -65,9 +65,9 @@ public class MainActivity extends Activity {
 		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 				updateTime.getTimeInMillis(),
-				AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-		Log.d(TAG, "Set alarmManager.setRepeating to: "
-				+ updateTime.getTime().toLocaleString());
+				AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);
+		//Log.d(TAG, "Set alarmManager.setRepeating to: "
+		//		+ updateTime.getTime().toLocaleString());
 	}
 
 	@Override

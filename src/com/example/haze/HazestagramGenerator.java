@@ -47,7 +47,7 @@ public class HazestagramGenerator extends AsyncTask<Void, Void, String> {
 	protected String doInBackground(Void... arg0) {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(end);
-		Log.v(TAG, "Request string: " + end);
+		//Log.v(TAG, "Request string: " + end);
 		String text = null;
 		try {
 			HttpResponse response = httpClient.execute(httpGet);
@@ -98,7 +98,7 @@ public class HazestagramGenerator extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected void onPostExecute(String results) {
-		Log.v(TAG, "Response string: " + results);
+		//Log.v(TAG, "Response string: " + results);
 		if (results != null) {
 			JSONArray data = null;
 			try {
@@ -120,7 +120,7 @@ public class HazestagramGenerator extends AsyncTask<Void, Void, String> {
 					String username = data.getJSONObject(i).getJSONObject("user").getString("username");
 					String id = data.getJSONObject(i).getString("id");
 					image_url=image_url.replace("\\", "");
-					Log.v(TAG, image_url+","+username);
+					//Log.v(TAG, image_url+","+username);
 					urls.add(image_url);
 					names.add(username);
 				} catch (JSONException e) {

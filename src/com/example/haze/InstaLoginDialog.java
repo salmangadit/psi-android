@@ -108,8 +108,8 @@ public class InstaLoginDialog extends Dialog {
 			if (title != null && title.length() > 0) {
 				textView.setText(title);
 			}
-			Log.d("Insta Login Dialog", "On Page Finished URL: " + url);
-			Log.e("PAGE FINISHED", "Called");
+			//Log.d("Insta Login Dialog", "On Page Finished URL: " + url);
+			//Log.e("PAGE FINISHED", "Called");
 			InstaLoginDialog.this.dismiss();
 		}
 

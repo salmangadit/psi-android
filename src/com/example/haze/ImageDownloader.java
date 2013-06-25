@@ -31,7 +31,7 @@ public class ImageDownloader extends AsyncTask {
 
 	@Override
 	protected Object doInBackground(Object... arg0) {
-		Log.v(TAG, "External Storage State: " + Environment.getExternalStorageState());
+		//Log.v(TAG, "External Storage State: " + Environment.getExternalStorageState());
 		
 		File directory = new File(Environment.getExternalStorageDirectory(), "/Haze");
 		if (directory.exists() == false) {

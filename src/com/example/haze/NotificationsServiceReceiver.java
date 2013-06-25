@@ -13,8 +13,8 @@ public class NotificationsServiceReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		Intent dailyUpdater = new Intent(context, PSIService.class);
 		context.startService(dailyUpdater);
-		Log.d(TAG,
-				"Called context.startService from AlarmReceiver.onReceive");
+		//Log.d(TAG,
+		//		"Called context.startService from AlarmReceiver.onReceive");
 	}
 
 }

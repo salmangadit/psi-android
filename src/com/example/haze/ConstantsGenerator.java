@@ -63,7 +63,7 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Log.e("JSON Parser", "Error parsing data " + e.toString());
+				//Log.e("JSON Parser", "Error parsing data " + e.toString());
 				e.printStackTrace();
 
 			}
@@ -97,6 +97,7 @@ public class ConstantsGenerator extends AsyncTask<Void, Void, String> {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				main.hazard.setText("Server problems. Value unreadable.");
 			}
 
 		}

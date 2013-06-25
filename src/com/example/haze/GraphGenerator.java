@@ -59,14 +59,14 @@ public class GraphGenerator extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected void onPostExecute(String results) {
-		Log.v(TAG, "Response string: " + results);
+		//Log.v(TAG, "Response string: " + results);
 		if (results != null) {
 			try {
 				jObj = new JSONArray(results);
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Log.e("JSON Parser", "Error parsing data " + e.toString());
+				//Log.e("JSON Parser", "Error parsing data " + e.toString());
 				e.printStackTrace();
 
 			}
